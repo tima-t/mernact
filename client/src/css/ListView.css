@@ -1,0 +1,17 @@
+.listViewSelected{
+	background-color: #296193;
+}
+
+.listViewSelected a{
+	color:white;
+}
+
+.list-group li:hover{
+	background-color: #5BC0DE;
+	color:white;
+	cursor:pointer;
+}
+
+.list-group li a:hover{
+	color:white;
+}
