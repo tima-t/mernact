@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import App from './App';
 import Admin from './Admin';
+import AdminLogin from './AdminLogin';
 import './index.css';
 
 ReactDOM.render(
@@ -13,6 +14,7 @@ ReactDOM.render(
 		<switch>
 			<Route exact path='/' component={App} />
 			<Route path='/admin' component={Admin} />
+			<Route path='/admin_login' component={AdminLogin} />
 		</switch>
 	</Router>,
 	document.getElementById('root')
