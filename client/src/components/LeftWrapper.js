@@ -25,7 +25,7 @@ class LeftWrapper extends Component {
 
 	getInitialPages() {
 		let that = this;
-		$.get("http://localhost:9000/api/initial_pages", function (data) {
+		$.get("http://localhost:9000/api/admin/initial_pages",{"name": localStorage.getItem("admin_name") , "token": localStorage.getItem("admin_token") }, function (data) {
 			console.log(data);
 			//return data.response.
 			let pagesNames = [];
@@ -54,7 +54,7 @@ class LeftWrapper extends Component {
 	addPage(e, pageName) {
 		let that = this;
 		e.preventDefault();
-		$.post("http://localhost:9000/api/add_page", { pageName: pageName }, function (data) {
+		$.post("http://localhost:9000/api/admin/add_page", { "pageName": pageName, "name": localStorage.getItem("admin_name") , "token": localStorage.getItem("admin_token") }, function (data) {
 			that.getInitialPages();
 		}, "json")
 		.fail(function(response){
@@ -66,7 +66,7 @@ class LeftWrapper extends Component {
 		console.log("remove "+ pageName);
 		let that = this;
 		e.preventDefault();
-		$.post("http://localhost:9000/api/remove_page", { pageName: pageName }, function (data) {
+		$.post("http://localhost:9000/api/admin/remove_page", { "pageName": pageName, "name": localStorage.getItem("admin_name") , "token": localStorage.getItem("admin_token") }, function (data) {
 			that.getInitialPages();
 		}, "json")
 		.fail(function(response){

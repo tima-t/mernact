@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const adminRouter = express.Router();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Page = require('./models/page');
@@ -49,13 +50,25 @@ app.post('/api/admin_validate', function (req, res) {
 	});
 })
 
-app.post('/api/auth_user', function(req, res){
+//Admin Routes
+adminRouter.use(function (req, res, next) {
+	console.log(req.query);
 	console.log("here auth user");
-	req.body.name == userName  && req.body.token == token? res.json({ "resp": "OK" }) : res.json({ "resp": "You need higher access level" });
-	return;
+	console.log("name client", req.body.name);
+	console.log("token client", req.body.token);
+	console.log(userName);
+	console.log(token);
+	if((req.body.name || req.query.name) == userName && (req.body.token || req.query.token) == token){
+		next();
+	}
+	else{
+		res.send(401, " missing auth header");
+	}
+
+	// res.json({ "resp": "OK" }) : res.json({ "resp": "You need higher access level" });
 })
 
-app.post('/api/add_page', function (req, res) {
+adminRouter.post('/add_page', function (req, res) {
 	console.log(req.body.pageName);
 	let curPage = new Page({
 		name: req.body.pageName,
@@ -72,7 +85,7 @@ app.post('/api/add_page', function (req, res) {
 	})
 })
 
-app.post('/api/remove_page', function (req, res) {
+adminRouter.post('/remove_page', function (req, res) {
 	console.log("remove page");
 	console.log(req.body.pageName);
 	Page.remove({ "name": req.body.pageName }, (err) => {
@@ -84,8 +97,8 @@ app.post('/api/remove_page', function (req, res) {
 	})
 })
 
-app.get('/api/initial_pages', function (req, res) {
-	// get all the users
+adminRouter.get('/initial_pages', function (req, res) {
+	// get all the pages
 	Page.find({}, function (err, pages) {
 		if (err) {
 			res.json({ "resp": err })
@@ -98,6 +111,9 @@ app.get('/api/initial_pages', function (req, res) {
 	});
 });
 
+app.use("/api/admin", adminRouter);
+
 app.listen(9000, function () {
 	console.log('Example app listening on port 9000!')
 })
+

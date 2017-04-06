@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './css/App.css';
 import {
-	Link, browserHistory, Redirect
+	Link,Redirect
 } from 'react-router-dom';
 import $ from 'jquery';
 
@@ -26,6 +26,7 @@ class AdminLogin extends Component {
 				}
 				localStorage.setItem("admin_name", name);
 				localStorage.setItem("admin_token", data.token);
+				localStorage.setItem("isUserAdmin" + data.token, "true");
 				console.log("success");
 				that.setState({"logged": true});
 			}, "json")
