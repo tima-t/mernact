@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Page = require('./models/page');
 const Admin = require('./models/admin');
+const Property = require('./models/property');
+const Component = require('./models/component');
 const db_config = require('./db_config');
 const crypto = require('crypto');
 let token, userName;
@@ -107,6 +109,20 @@ adminRouter.get('/initial_pages', function (req, res) {
 		res.json(
 			{
 				"resp": { "pages": pages }
+			});
+	});
+});
+
+adminRouter.get('/initial_widgets', function (req, res) {
+	// get all the widgets
+	Component.find({}, function (err, widgets) {
+		if (err) {
+			res.json({ "resp": err })
+			return;
+		};
+		res.json(
+			{
+				"resp": { "widgets": widgets }
 			});
 	});
 });

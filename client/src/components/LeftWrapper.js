@@ -17,8 +17,11 @@ class LeftWrapper extends Component {
 		this.removePage = this.removePage.bind(this);
 		this.listClicked = this.listClicked.bind(this);
 		this.getInitialPages = this.getInitialPages.bind(this);
+		this.getInitialWidgets = this.getInitialWidgets.bind(this);
 		this.pages = [];
+		this.widgets = [];
 		this.getInitialPages();
+		this.getInitialWidgets();
 		this.updateState = 0;
 		console.log("construct");
 	}
@@ -33,6 +36,19 @@ class LeftWrapper extends Component {
 				pagesNames.push(page.name);
 			}
 			that.pages = pagesNames;
+			that.setState({ "pagesUpdateState": ++that.updateState});
+			console.log(that.updateState);
+		}, "json");
+	}
+
+	getInitialWidgets() {
+		let that = this;
+		$.get("http://localhost:9000/api/admin/initial_widgets",{"name": localStorage.getItem("admin_name") , "token": localStorage.getItem("admin_token") }, function (data) {
+			console.log(data);
+			//return data.response.
+			for (let widget of data.resp.widgets) {
+				that.widgets.push({"name": widget.name, "properties": widget.properties});
+			}
 			that.setState({ "pagesUpdateState": ++that.updateState});
 			console.log(that.updateState);
 		}, "json");
@@ -82,11 +98,10 @@ class LeftWrapper extends Component {
 
 	render() {
 		const names = ['pages', 'widgets', 'resources'],
-			widgets = ['button', 'text', 'clock'],
-			resources = ['images', 'videos'],
+			resources = ['images', 'videos','css','js'],
 			pagesButtons = [{ width: 4, type: "btn-default", text: "add", action: "add", "dataToggle": 'modal', "dataTarget": "#addPage" },
 							{ width: 4, type: "btn-primary", text: "remove", action: 'remove', "dataToggle": 'modal', "dataTarget": "#removePage" }],
-			nav = { 'pages': this.pages, 'widgets': widgets, 'resources': resources, 'pagesButtons': pagesButtons };
+			nav = { 'pages': this.pages, 'widgets': this.widgets.map(function(widget){ return widget.name}), 'resources': resources, 'pagesButtons': pagesButtons };
 
 		return (
 			<div style={{ backgroundColor: '#D5D8D5' }} className="LeftWrapper col-sm-3" >
