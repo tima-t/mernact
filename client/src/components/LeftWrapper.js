@@ -6,6 +6,7 @@ import ButtonsRow from './ButtonsRow';
 import Popup from './Popup';
 import $ from 'jquery';
 
+
 class LeftWrapper extends Component {
 
 	constructor(props) {

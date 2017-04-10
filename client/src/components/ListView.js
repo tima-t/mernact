@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import '../css/ListView.css';
+import $ from "jquery";
+import {Draggable} from "react-drag-and-drop";
 
 class ListView extends Component {
 
 	handleListClicked(e){
 		this.props.listClicked(e);
 	}
+
+	componentDidMount(){
+		console.log($);
+	}
 	
 	render() {
 		return (
 			<ul className="list-group">
 				{this.props.names.map((name, index) =>
-					<li className="list-group-item" key={index} onClick={(e) => this.handleListClicked(e)} ><a>{name}</a></li>
+					<Draggable key={index} data={name + "M"} type="component"><li className="list-group-item" key={index} onClick={(e) => this.handleListClicked(e)} ><a>{name}</a></li></Draggable>
 				)}
 			</ul>
 		)
