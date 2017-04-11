@@ -9,7 +9,8 @@ const Property = require('./models/property');
 const Component = require('./models/component');
 const db_config = require('./db_config');
 const crypto = require('crypto');
-let token, userName;
+let token = Math.random(),
+	userName = Math.random();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -60,10 +61,10 @@ adminRouter.use(function (req, res, next) {
 	console.log("token client", req.body.token);
 	console.log(userName);
 	console.log(token);
-	if((req.body.name || req.query.name) == userName && (req.body.token || req.query.token) == token){
+	if ((req.body.name || req.query.name) == userName && (req.body.token || req.query.token) == token) {
 		next();
 	}
-	else{
+	else {
 		res.send(401, " missing auth header");
 	}
 
@@ -109,6 +110,20 @@ adminRouter.get('/initial_pages', function (req, res) {
 		res.json(
 			{
 				"resp": { "pages": pages }
+			});
+	});
+});
+
+adminRouter.get('/component_props', function (req, res) {
+	console.log("component props ", req.query.component)
+	Component.find({name: req.query.component}, function (err, comp) {
+		if (err) {
+			res.json({ "resp": err })
+			return;
+		};
+		res.json(
+			{
+				"resp": { "properties": comp[0]["properties"] }
 			});
 	});
 });

@@ -14,8 +14,8 @@ ReactDOM.render(
 	<Router>
 		<switch>
 			<Route exact path='/' component={App} />
-			<PrivateRoute path='/admin' component={Admin} />
 			<Route path='/admin_login' component={AdminLogin} />
+			<PrivateRoute path='/admin' component={Admin} />
 		</switch>
 	</Router>,
 	document.getElementById('root')

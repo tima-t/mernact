@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../css/ListView.css';
-import $ from "jquery";
 import {Draggable} from "react-drag-and-drop";
 
 class ListView extends Component {
@@ -10,7 +9,6 @@ class ListView extends Component {
 	}
 
 	componentDidMount(){
-		console.log($);
 	}
 	
 	render() {

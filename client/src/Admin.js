@@ -13,6 +13,7 @@ class Admin extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { "isAuthenticated": true };
+		this.componentClicked = this.componentClicked.bind(this);
 	}
 
 	handleLogOut() {
@@ -21,13 +22,20 @@ class Admin extends Component {
 		localStorage.clear();
 	}
 
+	componentClicked(comp) {
+		this.setState({
+			'selectedComponent': comp.type,
+			'selectedComponentId': comp.id
+		})
+	}
+
 	render() {
-		// this.isItAllowed();
+		console.log("admin state refresh");
 		return (
 			<div ref="adminPanel" className="AdminPanel">
-				<LeftWrapper />
-				<PageWrapper />
-				<RigthWrapper />
+				<LeftWrapper parentState={this.state} />
+				<PageWrapper componentClicked={this.componentClicked} parentState={this.state} />
+				<RigthWrapper componentId={this.selectedComponentId} component={this.state.selectedComponent}  parentState={this.state} />
 				<Link to="/" onClick={this.handleLogOut}>Log Out</Link>
 			</div>
 		);
