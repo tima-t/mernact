@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 class Popup extends Component {
 
-	handleSucces(e) {
+	handleSuccess(e) {
 		console.log(this.props.page);
 		let paramName = $(`#${this.props.id} .modal-body .WidgetProp input`).val();
 		this.props.successFunc(e, paramName);// || function(){};
@@ -26,7 +26,7 @@ class Popup extends Component {
 						</div>
 						<div className="modal-footer">
 							<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" className="btn btn-primary" data-dismiss="modal" onClick={(e) => this.handleSucces(e)}>OK</button>
+							<button type="button" className="btn btn-primary" data-dismiss="modal" onClick={(e) => this.handleSuccess(e)}>OK</button>
 						</div>
 					</div>
 

@@ -14,6 +14,7 @@ class Admin extends Component {
 		super(props);
 		this.state = { "isAuthenticated": true };
 		this.componentClicked = this.componentClicked.bind(this);
+		this.componentPropChanged = this.componentPropChanged.bind(this);
 	}
 
 	handleLogOut() {
@@ -29,13 +30,21 @@ class Admin extends Component {
 		})
 	}
 
+	componentPropChanged(element){
+		this.setState({
+			"elementId": element.id,
+			"propertyName": element.propertyName,
+			"propertyVal": element.propertyVal
+		})
+	}
+
 	render() {
 		console.log("admin state refresh");
 		return (
 			<div ref="adminPanel" className="AdminPanel">
-				<LeftWrapper parentState={this.state} />
-				<PageWrapper componentClicked={this.componentClicked} parentState={this.state} />
-				<RigthWrapper componentId={this.selectedComponentId} component={this.state.selectedComponent}  parentState={this.state} />
+				<LeftWrapper />
+				<PageWrapper elementId={this.state.elementId} propertyName={this.state.propertyName} propertyVal={this.state.propertyVal} componentClicked={this.componentClicked} />
+				<RigthWrapper propertyChanged={this.componentPropChanged} componentId={this.selectedComponentId} component={this.state.selectedComponent} componentId={this.state.selectedComponentId}/>
 				<Link to="/" onClick={this.handleLogOut}>Log Out</Link>
 			</div>
 		);

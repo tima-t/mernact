@@ -8,6 +8,7 @@ class ButtonM extends Component {
 		
 	}
 	render() {
+		console.log("element stye ",this.props);
 		return (
 			<div className="row">
 				<button onClick={(e)=>this.handleClick(e)} id={this.props.btnId} style={{width:"100%"}} className="btn btn-success">{this.props.btnText || "some text"}</button>

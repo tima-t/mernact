@@ -4,7 +4,7 @@ class WrapperTitle extends Component {
 	render() {
 		return (
 			<div className="WrapperTitle row text-center">
-				<h1>This is {this.props.name}	</h1>
+				<h1>{this.props.name}</h1>
 			</div>
 		);
 	}
