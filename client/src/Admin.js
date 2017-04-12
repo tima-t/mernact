@@ -32,7 +32,7 @@ class Admin extends Component {
 
 	componentPropChanged(element){
 		this.setState({
-			"elementId": element.id,
+			"elementId": element.elementId,
 			"propertyName": element.propertyName,
 			"propertyVal": element.propertyVal
 		})

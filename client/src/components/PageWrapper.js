@@ -22,6 +22,7 @@ class PageWrapper extends Component {
 				index++;
 			}
 		}
+		this.elementStyle = {};
 	}
 
 
@@ -42,9 +43,10 @@ class PageWrapper extends Component {
 	render() {
 		console.log("state refresh")
 		console.log(this.state);
-		let propName = this.props.propertyName;
-		let propVal = this.props.propertyVal;
-		let elementStyle = {propName: propVal};
+		console.log("page props", this.props);
+		this.elementStyle[this.props.elementId] = this.elementStyle[this.props.elementId]  || {};
+		this.elementStyle[this.props.elementId][this.props.propertyName] = this.props.propertyVal;
+		console.log("page ele style", this.elementStyle);
 		let TempElement;
 		return (
 			<div className="PageWrapper col-sm-6">
@@ -57,7 +59,7 @@ class PageWrapper extends Component {
 							<div className="col-xs-1 grid_cell">
 								{/*{index}*/}
 								{cell["cell_content"] && (TempElement = pageComponents[cell["cell_content"]] )? <TempElement 
-								elStyle = {this.props.elementId == (cell["cell_content"] + index)? elementStyle:""  }
+								elStyle = {this.props.elementId == (cell["cell_content"] + index)? this.elementStyle[this.props.elementId]: ""  }
 								btnId={cell["cell_content"] + index} btnClick={(e) => this.handleComponentClick(e)} btnText="aaatch you"/> : ""  }
 							</div>
 						</Droppable>
