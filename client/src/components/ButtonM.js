@@ -9,7 +9,7 @@ class ButtonM extends Component {
 
 	handleClick(e){
 		console.log(e.target.id);
-		this.props.btnClick(e);
+		this.props.elementClick(e);
 		
 	}
 	render() {
@@ -19,13 +19,13 @@ class ButtonM extends Component {
 			//color: this.props.elStyle.color || '' , width: "100%"
 			return (
 				<div className="row">
-					<button style={this.style} onClick={(e)=>this.handleClick(e)} id={this.props.btnId} className={"btn btn-success " + this.style.class }>{this.style.value || this.props.btnText}</button>
+					<button id={this.props.elementId}  onClick={(e)=>this.handleClick(e)} style={this.style}   className={"btn btn-default " + this.style.class }>{this.style.value || this.props.elementText}</button>
 				</div>
 			)
 		}
 		return (
 			<div className="row">
-				<button onClick={(e)=>this.handleClick(e)} id={this.props.btnId} style={{width:"100%"}} className="btn btn-success">{this.props.btnText}</button>
+				<button id={this.props.elementId}  onClick={(e)=>this.handleClick(e)}  style={{width:"100%"}} className="btn btn-default">{this.props.elementText || "val"}</button>
 			</div>
 		)
 	}
