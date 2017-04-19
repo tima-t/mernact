@@ -12,9 +12,11 @@ class Admin extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { "isAuthenticated": true };
+		this.state = { "isAuthenticated": true, "operation":"stay" };
 		this.componentClicked = this.componentClicked.bind(this);
 		this.componentPropChanged = this.componentPropChanged.bind(this);
+		this.elementRemoved = this.elementRemoved.bind(this);
+		this.elementRemovedFinished = this.elementRemovedFinished.bind(this);
 	}
 
 	handleLogOut() {
@@ -26,7 +28,8 @@ class Admin extends Component {
 	componentClicked(comp) {
 		this.setState({
 			'selectedComponent': comp.type,
-			'selectedComponentId': comp.id
+			'selectedComponentId': comp.id,
+			'selectedComponentStyle': comp.style
 		})
 	}
 
@@ -38,14 +41,29 @@ class Admin extends Component {
 		})
 	}
 
+	elementRemoved(element){
+		console.log("here remove ",element);
+		this.setState({
+			"elementId": element.elementId,
+			"operation": "remove"
+		})
+	}
+
+	elementRemovedFinished(){
+		this.setState({
+			"elementId": "",
+			"operation": "stay"
+		})
+	}
+
 	render() {
 		console.log("admin state refresh");
 		return (
 			<div ref="adminPanel" className="AdminPanel">
 				<LeftWrapper />
-				<PageWrapper elementId={this.state.elementId} propertyName={this.state.propertyName} propertyVal={this.state.propertyVal} componentClicked={this.componentClicked} />
-				<RigthWrapper propertyChanged={this.componentPropChanged} componentId={this.selectedComponentId} component={this.state.selectedComponent} componentId={this.state.selectedComponentId}/>
-				<Link to="/" onClick={this.handleLogOut}>Log Out</Link>
+				<PageWrapper elementRemovedFinished={this.elementRemovedFinished} operation={this.state.operation} elementId={this.state.elementId} propertyName={this.state.propertyName} propertyVal={this.state.propertyVal} componentClicked={this.componentClicked} />
+				<RigthWrapper elementRemoved={this.elementRemoved} propertyChanged={this.componentPropChanged} componentStyle={this.state.selectedComponentStyle} component={this.state.selectedComponent} componentId={this.state.selectedComponentId}/>
+				<Link className="logOut" to="/" onClick={this.handleLogOut}>Log Out</Link>
 			</div>
 		);
 	}

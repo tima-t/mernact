@@ -58,20 +58,30 @@ class RigthWrapper extends Component {
 		this.props.propertyChanged({ "elementId": data.elementId, "propertyName": data.propName, "propertyVal": data.e.target.value })
 	}
 
+	handleElementRemoved(data) {
+		this.props.elementRemoved({ "elementId": this.props.componentId })
+	}
+
 
 	render() {
 		this.componentDidMountRec();
+		console.log("style ",this.props.componentStyle);
 		if (this.componentProps.length) {
 			let ComponentPropsView =
 				<div style={{ backgroundColor: '#D5D8D5' }} className="RigthWrapper col-sm-3">
 					<WrapperTitle name={"Edit " + this.props.componentId + " properties"} />
 					<form>
 						{this.componentProps.map((property, index) =>
-							<WidgetProp elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} key={index} name={property} placeholder={property == "id" ? this.props.componentId : ""} />
+							<WidgetProp widgetVal={this.props.componentStyle &&  this.props.componentStyle[property]}  elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} key={index} name={property} placeholder={property == "id" ? this.props.componentId : ""} />
 						)}
-					<WidgetProp elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)}  name="cellHeight" placeholder={"50px"} />
-					<WidgetProp elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)}  name="cellWidth" placeholder={"1"} />
+						<WidgetProp key={this.props.componentId + 1} widgetVal={this.props.componentStyle && this.props.componentStyle["cellHeight"]} elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} name="cellHeight" placeholder={"50px"} />
+						<WidgetProp key={this.props.componentId + 2} widgetVal={this.props.componentStyle && this.props.componentStyle["cellWidth"]} elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} name="cellWidth" placeholder={"1"} />
 					</form>
+					<div className="row">
+						<div className="col-xs-4">
+							<button className="btn btn-primary" onClick={(data) => this.handleElementRemoved(data)}>Remove</button>
+						</div>
+					</div>
 				</div>;
 
 			return ComponentPropsView;

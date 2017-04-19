@@ -42,7 +42,31 @@ class PageWrapper extends Component {
 	}
 
 	handleComponentClick(e) {
-		this.props.componentClicked({ "id": (e.target.id), "type": (e.target.id.replace(/[0-9]/g, '')) });
+		let curElementIndex = e.target.id.replace(/^\D+/g, '');
+		let curStyle = this.page_content[curElementIndex]["cell_content_style"];
+		this.props.componentClicked({ "id": (e.target.id), "type": (e.target.id.replace(/[0-9]/g, '')), "style": curStyle });
+	}
+
+	viewToggle(e) {
+		if ($(e.target).text() === "full-screen") {
+			$(".PageWrapper .grid_cell_item").removeClass("grid_cell");
+			$(e.target).text("normal-screen");
+			$(".PageWrapper").removeClass("col-sm-6");
+			$(".PageWrapper").addClass("col-sm-12");
+			$(".RigthWrapper").hide("slow");
+			$(".LeftWrapper").hide("slow");
+			$(".logOut").hide();
+		}
+		else if ($(e.target).text() === "normal-screen") {
+			$(e.target).text("full-screen");
+			$(".PageWrapper .grid_cell_item").addClass("grid_cell");
+			$(".PageWrapper").removeClass("col-sm-12");
+			$(".PageWrapper").addClass("col-sm-6");
+			$(".RigthWrapper").show("slow");
+			$(".LeftWrapper").show("slow");
+			$(".logOut").show();
+
+		}
 	}
 
 	render() {
@@ -51,14 +75,25 @@ class PageWrapper extends Component {
 		// console.log("page props", this.props);
 		console.log("el styl e", this.elementStyle[this.props.elementId]);
 		if (this.props.elementId) {
-			this.elementStyle[this.props.elementId] = this.elementStyle[this.props.elementId] || {};
-			this.elementStyle[this.props.elementId][this.props.propertyName] = this.props.propertyVal;
 			let curElementIndex = this.props.elementId.replace(/^\D+/g, '')
-			this.page_content[curElementIndex]["cell_content_style"][this.props.propertyName] = this.props.propertyVal;
-			this.page_content[curElementIndex]["cellWidth"] = this.page_content[curElementIndex]["cell_content_style"]["cellWidth"] || "1";
-			this.page_content[curElementIndex]["cellHeight"] = this.page_content[curElementIndex]["cell_content_style"]["cellHeight"] || "50px";
-			console.log("page ele style", this.page_content);
-			
+			//empty given cell
+			if (this.props.operation == "remove") {
+				this.page_content[curElementIndex]["cellHeight"] = "50px";
+				this.page_content[curElementIndex]["cellWidth"] = "1";
+				this.page_content[curElementIndex]["cell_content"] = "";
+				this.page_content[curElementIndex]["cell_content_style"] = {};
+				this.props.elementRemovedFinished();
+			}
+			else {
+				this.elementStyle[this.props.elementId] = this.elementStyle[this.props.elementId] || {};
+				this.elementStyle[this.props.elementId][this.props.propertyName] = this.props.propertyVal;
+				this.page_content[curElementIndex]["cell_content_style"][this.props.propertyName] = this.props.propertyVal;
+				this.page_content[curElementIndex]["cellWidth"] = this.page_content[curElementIndex]["cell_content_style"]["cellWidth"] || "1";
+				this.page_content[curElementIndex]["cellHeight"] = this.page_content[curElementIndex]["cell_content_style"]["cellHeight"] || "50px";
+				console.log("page ele style", this.page_content);
+			}
+
+
 		}
 
 		let TempElement;
@@ -66,15 +101,21 @@ class PageWrapper extends Component {
 			<div className="PageWrapper col-sm-6">
 				<div className="row">
 					<WrapperTitle name="Page View" />
+					<div className="row">
+						<div className="col-xs-offset-10 col-xs-2 text-right">
+							<button className="btn btn-primary" onClick={(e) => this.viewToggle(e)}>full-screen</button>
+						</div>
+					</div>
+					<br />
 					{this.page_content.map((cell, index) =>
 						<Droppable key={index} types={["component"]}
 							onDrop={this.dropNotification.bind(this, cell, this)}
 							onDragEnter={this.dragEnter}>
-							<div id={"cellFor" + this.props.elementId} className={"grid_cell " + "col-xs-"+ cell.cellWidth + " "} style={{height: cell.cellHeight}}>
+							<div id={"cell_" + index} className={"grid_cell grid_cell_item " + "col-xs-" + cell.cellWidth + " "} style={{ height: cell.cellHeight }}>
 								{/*{index}*/}
 								{cell["cell_content"] && (TempElement = pageComponents[cell["cell_content"]]) ? <TempElement
 									elStyle={this.props.elementId == (cell["cell_content"] + index) ? this.elementStyle[this.props.elementId] : ""}
-									elementId={cell["cell_content"] + index} elementClick={(e) => this.handleComponentClick(e)} elementText="Mern"  /> : ""}
+									elementId={cell["cell_content"] + index} elementClick={(e) => this.handleComponentClick(e)} elementText="Mern" /> : ""}
 							</div>
 						</Droppable>
 					)}

@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 class WidgetProps extends Component {
 
 	render() {
-			 let input = this.props.widgetVal? <input type="text" className="form-control" placeholder={this.props.name} value={this.props.widgetVal} /> : 
-			<input type="text" className="form-control" defaultValue="" placeholder={this.props.placeholder || this.props.name} onChange={e=> this.handlePropertyChanged(e, this.props.elementId)} /*onChange={e => this.onWidgetChange(e.target.value)}*/ /> ;
+			//   this.props.widgetVal? <input type="text" className="form-control" placeholder={this.props.name} value={this.props.widgetVal} /> : 
+			let input = <input type="text" className="form-control" defaultValue={this.props.widgetVal} placeholder={this.props.placeholder || this.props.name} onChange={e=> this.handlePropertyChanged(e, this.props.elementId)} /*onChange={e => this.onWidgetChange(e.target.value)}*/ /> ;
 		return (
 			<div className="form-group WidgetProp">
 				<label htmlFor="usr">{this.props.name}</label>
