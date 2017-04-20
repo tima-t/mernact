@@ -10,4 +10,4 @@ const PageStructureSchema = new Schema({
 let PageStructure = mongoose.model('PageStructure', PageStructureSchema);
 
 // make this available to our users in our Node applications
-module.exports = PageStructureSchema;
+module.exports = PageStructure;

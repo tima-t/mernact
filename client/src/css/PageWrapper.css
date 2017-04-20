@@ -4,6 +4,16 @@
 
 }
 
+.grid_cell_selected{
+	border: 2px dotted #296092;
+}
+
 .PageWrapper {
 	padding: 0px 50px;
+}
+.screenBtn{
+	/*width:100%;*/
+}
+.savenBtn{
+	margin-right: 10px;
 }

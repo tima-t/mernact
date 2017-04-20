@@ -17,6 +17,7 @@ class PageWrapper extends Component {
 		super(props);
 		this.state = { "curState": 0 }
 		this.page_content = [];
+		this.inital_page_content = [];
 		let index = 0;
 		for (let row = 1; row <= 12; row++) {
 			for (let cell = 1; cell <= 12; cell++) {
@@ -25,6 +26,8 @@ class PageWrapper extends Component {
 				index++;
 			}
 		}
+
+		this.inital_page_content = this.page_content;
 		this.elementStyle = {};
 	}
 
@@ -43,12 +46,16 @@ class PageWrapper extends Component {
 
 	handleComponentClick(e) {
 		let curElementIndex = e.target.id.replace(/^\D+/g, '');
+		$(".grid_cell_selected").removeClass("grid_cell_selected");
+		$("#cell_" + curElementIndex).addClass("grid_cell_selected");
+		console.log($("#cell_" + curElementIndex));
 		let curStyle = this.page_content[curElementIndex]["cell_content_style"];
 		this.props.componentClicked({ "id": (e.target.id), "type": (e.target.id.replace(/[0-9]/g, '')), "style": curStyle });
 	}
 
 	viewToggle(e) {
 		if ($(e.target).text() === "full-screen") {
+			$(".grid_cell_selected").removeClass("grid_cell_selected");
 			$(".PageWrapper .grid_cell_item").removeClass("grid_cell");
 			$(e.target).text("normal-screen");
 			$(".PageWrapper").removeClass("col-sm-6");
@@ -69,11 +76,32 @@ class PageWrapper extends Component {
 		}
 	}
 
+	savePage(e) {
+		e.preventDefault();
+		console.log(this.page_content)
+		// if page is selected
+		if (this.props.selectedPage) {
+			console.log(localStorage);
+			$.post("http://localhost:9000/api/admin/save_page_structure", { "pageName": this.props.selectedPage, "pageStructure": this.page_content, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
+				alert("Your page is " + data.resp);
+			}, "json")
+				.fail(function (response) {
+					alert("Error" + response.responseText);
+				});
+		}
+	}
+
 	render() {
 		// console.log("state refresh")
 		// console.log(this.state);
 		// console.log("page props", this.props);
 		console.log("el styl e", this.elementStyle[this.props.elementId]);
+		console.log(this.props.page_content)
+		if(this.props.page_content){
+			this.page_content = this.props.page_content.length? this.props.page_content : this.inital_page_content;
+			this.elementStyle = this.props.page_content.map((component)=> component["cell_content_style"]);
+			this.props.pageContentUpdated();
+		}
 		if (this.props.elementId) {
 			let curElementIndex = this.props.elementId.replace(/^\D+/g, '')
 			//empty given cell
@@ -85,8 +113,9 @@ class PageWrapper extends Component {
 				this.props.elementRemovedFinished();
 			}
 			else {
-				this.elementStyle[this.props.elementId] = this.elementStyle[this.props.elementId] || {};
-				this.elementStyle[this.props.elementId][this.props.propertyName] = this.props.propertyVal;
+				console.log(this.page_content);
+				this.elementStyle[curElementIndex] = this.elementStyle[curElementIndex] || {};
+				this.elementStyle[curElementIndex][this.props.propertyName] = this.props.propertyVal;
 				this.page_content[curElementIndex]["cell_content_style"][this.props.propertyName] = this.props.propertyVal;
 				this.page_content[curElementIndex]["cellWidth"] = this.page_content[curElementIndex]["cell_content_style"]["cellWidth"] || "1";
 				this.page_content[curElementIndex]["cellHeight"] = this.page_content[curElementIndex]["cell_content_style"]["cellHeight"] || "50px";
@@ -100,10 +129,11 @@ class PageWrapper extends Component {
 		return (
 			<div className="PageWrapper col-sm-6">
 				<div className="row">
-					<WrapperTitle name="Page View" />
-					<div className="row">
-						<div className="col-xs-offset-10 col-xs-2 text-right">
-							<button className="btn btn-primary" onClick={(e) => this.viewToggle(e)}>full-screen</button>
+					<WrapperTitle name={this.props.selectedPage ? (this.props.selectedPage + " page view") : "page view"} />
+					<div className="row ">
+						<div className="col-xs-12 text-right">
+							<button className="savenBtn btn btn-default" onClick={(e) => this.savePage(e)}>save</button>
+							<button className="screenBtn btn btn-primary" onClick={(e) => this.viewToggle(e)}>full-screen</button>
 						</div>
 					</div>
 					<br />
@@ -114,7 +144,7 @@ class PageWrapper extends Component {
 							<div id={"cell_" + index} className={"grid_cell grid_cell_item " + "col-xs-" + cell.cellWidth + " "} style={{ height: cell.cellHeight }}>
 								{/*{index}*/}
 								{cell["cell_content"] && (TempElement = pageComponents[cell["cell_content"]]) ? <TempElement
-									elStyle={this.props.elementId == (cell["cell_content"] + index) ? this.elementStyle[this.props.elementId] : ""}
+									elStyle={this.props.elementId == (cell["cell_content"] + index) ? this.elementStyle[index] : this.elementStyle[index]}
 									elementId={cell["cell_content"] + index} elementClick={(e) => this.handleComponentClick(e)} elementText="Mern" /> : ""}
 							</div>
 						</Droppable>

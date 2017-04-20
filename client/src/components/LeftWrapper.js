@@ -93,6 +93,7 @@ class LeftWrapper extends Component {
 
 	listClicked(e) {
 		if (this.state.page === "pages") {
+			this.props.handlePageSelect($(e.target).text());
 			this.setState({ 'selectedListPage': $(e.target).text() });
 		}
 	}

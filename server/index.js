@@ -4,6 +4,7 @@ const adminRouter = express.Router();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Page = require('./models/page');
+const PageStructure = require("./models/pageStructure");
 const Admin = require('./models/admin');
 const Property = require('./models/property');
 const Component = require('./models/component');
@@ -85,6 +86,39 @@ adminRouter.post('/add_page', function (req, res) {
 			return;
 		}
 		res.json({ "resp": "OK" })
+	})
+})
+
+adminRouter.post('/save_page_structure', function (req, res) {
+	let pageStructure = {
+		page_name: req.body.pageName,
+		components: req.body.pageStructure,
+		created_at: new Date()
+	};
+
+	PageStructure.update({page_name:req.body.pageName},pageStructure,{upsert:true},(err) => {
+		if (err) {
+			res.json({ "resp": err });
+			return;
+		}
+		res.json({ "resp": "OK" })
+	})
+})
+
+adminRouter.get('/get_page_structure', function (req, res) {
+	console.log(req.body.pageName);
+	PageStructure.find({page_name: req.query.pageName},(err, pageStrucutre) => {
+		if (err) {
+			res.json({ "resp": err });
+			return;
+		}
+		if(pageStrucutre[0] && pageStrucutre[0].components ){
+			res.json({ "resp": { "pageStructure" : pageStrucutre[0].components} })
+		}
+		else{
+			res.json({"resp": {"pageStructure" : []} })
+		}
+
 	})
 })
 

@@ -22,7 +22,7 @@ class Popup extends Component {
 						</div>
 						<div className="modal-body">
 							<p>Some text in the modal.</p>
-							<WidgetProp widgetVal={this.props.page || ""} name="Page Title" />
+							<WidgetProp key={this.props.id} widgetVal={this.props.page || ""} name="Page Title" />
 						</div>
 						<div className="modal-footer">
 							<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
