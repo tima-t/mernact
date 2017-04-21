@@ -99,7 +99,7 @@ class PageWrapper extends Component {
 		console.log(this.props.page_content)
 		if(this.props.page_content){
 			this.page_content = this.props.page_content.length? this.props.page_content : this.inital_page_content;
-			this.elementStyle = this.props.page_content.map((component)=> component["cell_content_style"]);
+			this.elementStyle = this.props.page_content.map((component)=> component["cell_content_style"] || {});
 			this.props.pageContentUpdated();
 		}
 		if (this.props.elementId) {
@@ -113,9 +113,10 @@ class PageWrapper extends Component {
 				this.props.elementRemovedFinished();
 			}
 			else {
-				console.log(this.page_content);
+				console.log("page content ",this.page_content);
 				this.elementStyle[curElementIndex] = this.elementStyle[curElementIndex] || {};
 				this.elementStyle[curElementIndex][this.props.propertyName] = this.props.propertyVal;
+				this.page_content[curElementIndex]["cell_content_style"] = this.page_content[curElementIndex]["cell_content_style"] || {};
 				this.page_content[curElementIndex]["cell_content_style"][this.props.propertyName] = this.props.propertyVal;
 				this.page_content[curElementIndex]["cellWidth"] = this.page_content[curElementIndex]["cell_content_style"]["cellWidth"] || "1";
 				this.page_content[curElementIndex]["cellHeight"] = this.page_content[curElementIndex]["cell_content_style"]["cellHeight"] || "50px";

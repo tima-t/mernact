@@ -96,7 +96,7 @@ adminRouter.post('/save_page_structure', function (req, res) {
 		created_at: new Date()
 	};
 
-	PageStructure.update({page_name:req.body.pageName},pageStructure,{upsert:true},(err) => {
+	PageStructure.update({page_name:req.body.pageName},pageStructure,{upsert:true, minimize: false },(err) => {
 		if (err) {
 			res.json({ "resp": err });
 			return;
