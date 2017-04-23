@@ -14,6 +14,7 @@ const db_init_json = {
 		{ "name": "button", "properties": ["id", "color", "value", "class", "width", "height"] },
 		{ "name": "input", "properties": ["id", "color", "value", "class", "width", "height"] },
 		{ "name": "label", "properties": ["id", "color", "value", "class", "width", "height"] },
+		{ "name": "link", "properties": ["id", "color", "value", "class", "width", "height","destination"] },
 	]
 }
 module.exports = db_init_json;

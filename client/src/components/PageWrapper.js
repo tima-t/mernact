@@ -5,10 +5,12 @@ import $ from "jquery";
 import '../css/PageWrapper.css';
 import ButtonM from "./ButtonM"
 import LabelM from "./LabelM"
+import LinkM from "./LinkM"
 
 const pageComponents = {
 	"buttonM": ButtonM,
-	"labelM": LabelM
+	"labelM": LabelM,
+	"linkM": LinkM
 };
 
 class PageWrapper extends Component {
@@ -134,13 +136,14 @@ class PageWrapper extends Component {
 					<div className="row">
 						<br />
 						{this.page_content.map((cell, index) =>
-						
-								<div id={"cell_" + index} key={index} className={" " + "col-xs-" + cell.cellWidth + " "} style={{ height: cell.cellHeight }}>
-									{/*{index}*/}
-									{cell["cell_content"] && (TempElement = pageComponents[cell["cell_content"]]) ? <TempElement
-										elStyle={this.props.elementId == (cell["cell_content"] + index) ? this.elementStyle[index] : this.elementStyle[index]}
-										elementId={cell["cell_content"] + index}  elementText="Mern" /> : ""}
-								</div>
+
+							<div id={"cell_" + index} key={index} className={" " + "col-xs-" + cell.cellWidth + " "} style={{ height: cell.cellHeight }}>
+								{/*{index}*/}
+								{cell["cell_content"] && (TempElement = pageComponents[cell["cell_content"]]) ? <TempElement
+									clientMode={true}
+									elStyle={this.props.elementId == (cell["cell_content"] + index) ? this.elementStyle[index] : this.elementStyle[index]}
+									elementId={cell["cell_content"] + index} elementText="Mern" /> : ""}
+							</div>
 
 						)}
 					</div>
