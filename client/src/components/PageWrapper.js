@@ -97,9 +97,9 @@ class PageWrapper extends Component {
 		// console.log("page props", this.props);
 		console.log("el styl e", this.elementStyle[this.props.elementId]);
 		console.log(this.props.page_content)
-		if(this.props.page_content){
-			this.page_content = this.props.page_content.length? this.props.page_content : this.inital_page_content;
-			this.elementStyle = this.props.page_content.map((component)=> component["cell_content_style"] || {});
+		if (this.props.page_content) {
+			this.page_content = this.props.page_content.length ? this.props.page_content : this.inital_page_content;
+			this.elementStyle = this.props.page_content.map((component) => component["cell_content_style"] || {});
 			this.props.pageContentUpdated();
 		}
 		if (this.props.elementId) {
@@ -113,7 +113,7 @@ class PageWrapper extends Component {
 				this.props.elementRemovedFinished();
 			}
 			else {
-				console.log("page content ",this.page_content);
+				console.log("page content ", this.page_content);
 				this.elementStyle[curElementIndex] = this.elementStyle[curElementIndex] || {};
 				this.elementStyle[curElementIndex][this.props.propertyName] = this.props.propertyVal;
 				this.page_content[curElementIndex]["cell_content_style"] = this.page_content[curElementIndex]["cell_content_style"] || {};
@@ -127,6 +127,26 @@ class PageWrapper extends Component {
 		}
 
 		let TempElement;
+
+		if (this.props.clientMode) {
+			return (
+				<div className="PageWrapper col-sm-12">
+					<div className="row">
+						<br />
+						{this.page_content.map((cell, index) =>
+						
+								<div id={"cell_" + index} key={index} className={" " + "col-xs-" + cell.cellWidth + " "} style={{ height: cell.cellHeight }}>
+									{/*{index}*/}
+									{cell["cell_content"] && (TempElement = pageComponents[cell["cell_content"]]) ? <TempElement
+										elStyle={this.props.elementId == (cell["cell_content"] + index) ? this.elementStyle[index] : this.elementStyle[index]}
+										elementId={cell["cell_content"] + index}  elementText="Mern" /> : ""}
+								</div>
+
+						)}
+					</div>
+				</div>
+			);
+		}
 		return (
 			<div className="PageWrapper col-sm-6">
 				<div className="row">

@@ -5,8 +5,9 @@ import {
 	Link
 } from 'react-router-dom';
 
-class App extends Component {
+class App extends Component {	
 	render() {
+		console.log("page name ",this.props.match.params.pageName || "empty")
 		return (
 			<div className="App">
 				<div className="App-header">

@@ -54,6 +54,23 @@ app.post('/api/admin_validate', function (req, res) {
 	});
 })
 
+app.get('/api/get_page_structure', function (req, res) {
+	console.log(req.body.pageName);
+	PageStructure.find({ page_name: req.query.pageName }, (err, pageStrucutre) => {
+		if (err) {
+			res.json({ "resp": err });
+			return;
+		}
+		if (pageStrucutre[0] && pageStrucutre[0].components) {
+			res.json({ "resp": { "pageStructure": pageStrucutre[0].components } })
+		}
+		else {
+			res.json({ "resp": { "pageStructure": [] } })
+		}
+
+	})
+})
+
 //Admin Routes
 adminRouter.use(function (req, res, next) {
 	console.log(req.query);
@@ -96,7 +113,7 @@ adminRouter.post('/save_page_structure', function (req, res) {
 		created_at: new Date()
 	};
 
-	PageStructure.update({page_name:req.body.pageName},pageStructure,{upsert:true, minimize: false },(err) => {
+	PageStructure.update({ page_name: req.body.pageName }, pageStructure, { upsert: true, minimize: false }, (err) => {
 		if (err) {
 			res.json({ "resp": err });
 			return;
@@ -107,16 +124,16 @@ adminRouter.post('/save_page_structure', function (req, res) {
 
 adminRouter.get('/get_page_structure', function (req, res) {
 	console.log(req.body.pageName);
-	PageStructure.find({page_name: req.query.pageName},(err, pageStrucutre) => {
+	PageStructure.find({ page_name: req.query.pageName }, (err, pageStrucutre) => {
 		if (err) {
 			res.json({ "resp": err });
 			return;
 		}
-		if(pageStrucutre[0] && pageStrucutre[0].components ){
-			res.json({ "resp": { "pageStructure" : pageStrucutre[0].components} })
+		if (pageStrucutre[0] && pageStrucutre[0].components) {
+			res.json({ "resp": { "pageStructure": pageStrucutre[0].components } })
 		}
-		else{
-			res.json({"resp": {"pageStructure" : []} })
+		else {
+			res.json({ "resp": { "pageStructure": [] } })
 		}
 
 	})
@@ -130,6 +147,13 @@ adminRouter.post('/remove_page', function (req, res) {
 			res.json({ "resp": err });
 			return;
 		}
+
+		PageStructure.remove({ page_name: req.body.pageName }, (err) => {
+			if (err) {
+				res.json({ "resp": err });
+				return;
+			}
+		})
 		res.json({ "resp": "Page removed" });
 	})
 })
@@ -150,7 +174,7 @@ adminRouter.get('/initial_pages', function (req, res) {
 
 adminRouter.get('/component_props', function (req, res) {
 	console.log("component props ", req.query.component)
-	Component.find({name: req.query.component}, function (err, comp) {
+	Component.find({ name: req.query.component }, function (err, comp) {
 		if (err) {
 			res.json({ "resp": err })
 			return;

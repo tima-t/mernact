@@ -9,7 +9,9 @@ class ButtonM extends Component {
 
 	handleClick(e){
 		console.log(e.target.id);
-		this.props.elementClick(e);
+		if(this.props.elementClick){
+			this.props.elementClick(e);
+		}
 		
 	}
 	render() {

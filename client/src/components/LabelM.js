@@ -10,7 +10,9 @@ class LabelM extends Component {
 
 	handleClick(e) {
 		console.log(e.target.id);
-		this.props.elementClick(e);
+		if (this.props.elementClick) {
+			this.props.elementClick(e);
+		}
 
 	}
 	render() {
@@ -26,7 +28,7 @@ class LabelM extends Component {
 		}
 		return (
 			<div className="row">
-				<span  id={this.props.elementId} onClick={(e) => this.handleClick(e)} style={{ width: "100%" }} className="label label-default labelM ">{this.props.elementText || "val"}</span>
+				<span id={this.props.elementId} onClick={(e) => this.handleClick(e)} style={{ width: "100%" }} className="label label-default labelM ">{this.props.elementText || "val"}</span>
 			</div>
 		)
 	}
