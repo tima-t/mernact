@@ -10,11 +10,29 @@ const Property = require('./models/property');
 const Component = require('./models/component');
 const db_config = require('./db_config');
 const crypto = require('crypto');
+const multer = require("multer");
 let token = Math.random(),
 	userName = Math.random();
 
+let storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+	if(file.originalname.indexOf("mp4") !== -1 || file.originalname.indexOf("webm") !== -1 || file.originalname.indexOf("ogg") !== -1  ){
+		callback(null, './resources/video');
+	}
+	else{
+		 callback(null, './resources/images');
+	}
+  },
+  filename: function (req, file, callback) {
+    callback(null,  Date.now() + '-' + file.originalname );
+  }
+});
+
+let upload = multer({ storage : storage}).single('userPhoto');
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/resources'));
 mongoose.connect(db_config['db_path']);
 
 app.use(function (req, res, next) {
@@ -72,6 +90,16 @@ app.get('/api/get_page_structure', function (req, res) {
 })
 
 //Admin Routes
+
+adminRouter.post('/photo',function(req,res){
+    upload(req,res,function(err) {
+        if(err) {
+            return res.end("Error uploading file.");
+        }
+        res.json({ "resp": "Ok" })
+    });
+});
+
 adminRouter.use(function (req, res, next) {
 	console.log(req.query);
 	console.log("here auth user");

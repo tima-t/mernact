@@ -111,6 +111,14 @@ class LeftWrapper extends Component {
 				<TabsMenu tabClick={this.tabClick} names={names} selected={this.state.page} />
 				<ListView selectedItem={this.state.selectedListPage} type={this.state.page} listClicked={this.listClicked} names={nav[this.state.page]} />
 				<ButtonsRow buttonClick={this.buttonClick} buttons={nav[this.state.page + 'Buttons'] || []} />
+				<form className={this.state.page !== "resources"? "hidden" : ""} id="uploadForm"
+					encType="multipart/form-data"
+					action="http://localhost:9000/api/admin/photo"
+					method="post">
+					<input type="file" name="userPhoto" />
+					<input type="submit" value="Upload Image" name="submit"/>
+					<span id="status"></span>
+				</form>
 				<Popup id="addPage" successFunc={this.addPage} />
 				<Popup id="removePage" page={this.state.selectedListPage} successFunc={this.removePage} />
 			</div>
