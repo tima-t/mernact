@@ -11,24 +11,33 @@ const Component = require('./models/component');
 const db_config = require('./db_config');
 const crypto = require('crypto');
 const multer = require("multer");
+const nodeMailer = require("nodemailer");
+const transporter = nodeMailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: db_config['initial_email'],
+		pass: db_config['email_pass']
+	}
+})
+
 let token = Math.random(),
 	userName = Math.random();
 
-let storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-	if(file.originalname.indexOf("mp4") !== -1 || file.originalname.indexOf("webm") !== -1 || file.originalname.indexOf("ogg") !== -1  ){
-		callback(null, './resources/video');
+let storage = multer.diskStorage({
+	destination: function (req, file, callback) {
+		if (file.originalname.indexOf("mp4") !== -1 || file.originalname.indexOf("webm") !== -1 || file.originalname.indexOf("ogg") !== -1) {
+			callback(null, './resources/video');
+		}
+		else {
+			callback(null, './resources/images');
+		}
+	},
+	filename: function (req, file, callback) {
+		callback(null, Date.now() + '-' + file.originalname);
 	}
-	else{
-		 callback(null, './resources/images');
-	}
-  },
-  filename: function (req, file, callback) {
-    callback(null,  Date.now() + '-' + file.originalname );
-  }
 });
 
-let upload = multer({ storage : storage}).single('userPhoto');
+let upload = multer({ storage: storage }).single('userPhoto');
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,8 +52,26 @@ app.use(function (req, res, next) {
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/', function (req, res) {
-	res.send('hello world')
+	res.send('hello to MernAct')
 })
+
+app.post('/api/send_mail', function (req, res) {
+	let mailOptions = {
+		to: db_config['initial_email'], // list of receivers
+		subject: req.body.subject, // Subject line
+		text: req.body.message + "/n/r/r From" + req.body.name + "" + req.body.email, // plain text body
+		html: '<b>' + req.body.message + "<br> From " + req.body.name + " - " + req.body.email + '</b>' // html body
+	};
+
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error) {
+			res.json({ "resp": error });
+		} else {
+			res.json({ "resp": "success" });
+		}
+	});
+})
+
 
 app.post('/api/admin_validate', function (req, res) {
 	console.log("login admin");
@@ -91,13 +118,13 @@ app.get('/api/get_page_structure', function (req, res) {
 
 //Admin Routes
 
-adminRouter.post('/photo',function(req,res){
-    upload(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");
-        }
-        res.json({ "resp": "Ok" })
-    });
+adminRouter.post('/photo', function (req, res) {
+	upload(req, res, function (err) {
+		if (err) {
+			return res.end("Error uploading file.");
+		}
+		res.json({ "resp": "Ok" })
+	});
 });
 
 adminRouter.use(function (req, res, next) {
