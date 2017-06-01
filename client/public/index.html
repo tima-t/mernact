@@ -67,8 +67,35 @@
 			//Very important line, it disable the page refresh.
 			return false;
 		}));
+
+		/*Send mail*/
+		$("body").on("click", "#sendEmail",function(){
+			console.log("here send email");
+			var country, email, name, message, subject;
+			email = $("#iEmail").val();
+			name = $("#iName").val();
+			message = $("#iMessage").val();
+			subject = $("#iSubject").val();
+
+			if (name.length >= 3 && email.length >= 4) {
+				$("#iEmail").val("");
+				$("#iName").val("");
+				$("#iMessage").val("");
+				$("#iSubject").val("");
+				$(".iSuccess").show();
+				$(".iErrors").hide();
+				$.post("http://localhost:9000/api/send_mail", { name: name, email: email, subject: subject, message: message }).error(function(){
+					alert("Your email is not sent");
+					$(".iErrors").show();
+				});
+			}
+			else {
+				$(".iSuccess").hide();
+				$(".iErrors").show();
+			}
+		});
 	});
 
 </script>
 
-</html>
+</html>

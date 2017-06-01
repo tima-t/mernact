@@ -20,7 +20,7 @@ class LinkM extends Component {
 
 	}
 	render() {
-		console.log("this element ", this.props.elStyle);
+		// console.log("this element ", this.props.elStyle);
 		this.style = this.props.elStyle || this.style;
 		if (this.style) {
 			//color: this.props.elStyle.color || '' , width: "100%"

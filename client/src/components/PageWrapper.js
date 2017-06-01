@@ -3,14 +3,22 @@ import WrapperTitle from './WrapperTitle';
 import { Droppable } from "react-drag-and-drop";
 import $ from "jquery";
 import '../css/PageWrapper.css';
-import ButtonM from "./ButtonM"
-import LabelM from "./LabelM"
-import LinkM from "./LinkM"
+import ButtonM from "./ButtonM";
+import LabelM from "./LabelM";
+import LinkM from "./LinkM";
+import ImageM from "./ImageM";
+import VideoM from "./VideoM";
+import TextM from "./TextM";
+import ContactformM from "./ContactformM";
 
 const pageComponents = {
 	"buttonM": ButtonM,
 	"labelM": LabelM,
-	"linkM": LinkM
+	"linkM": LinkM,
+	"imageM": ImageM,
+	"videoM": VideoM,
+	"textM": TextM,
+	"contactformM": ContactformM,
 };
 
 class PageWrapper extends Component {
@@ -80,10 +88,10 @@ class PageWrapper extends Component {
 
 	savePage(e) {
 		e.preventDefault();
-		console.log(this.page_content)
+		// console.log(this.page_content)
 		// if page is selected
 		if (this.props.selectedPage) {
-			console.log(localStorage);
+			// console.log(localStorage);
 			$.post("http://localhost:9000/api/admin/save_page_structure", { "pageName": this.props.selectedPage, "pageStructure": this.page_content, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
 				alert("Your page is " + data.resp);
 			}, "json")
@@ -97,8 +105,8 @@ class PageWrapper extends Component {
 		// console.log("state refresh")
 		// console.log(this.state);
 		// console.log("page props", this.props);
-		console.log("el styl e", this.elementStyle[this.props.elementId]);
-		console.log(this.props.page_content)
+		// console.log("el styl e", this.elementStyle[this.props.elementId]);
+		// console.log(this.props.page_content)
 		if (this.props.page_content) {
 			this.page_content = this.props.page_content.length ? this.props.page_content : this.inital_page_content;
 			this.elementStyle = this.props.page_content.map((component) => component["cell_content_style"] || {});

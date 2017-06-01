@@ -18,7 +18,7 @@ class ListView extends Component {
 		return (
 			<ul className="list-group">
 				{this.props.names.map((name, index) =>
-					<Draggable  key={index} data={name + "M"} type="component"><li className={"list-group-item " + (name == this.props.selectedItem? "listViewSelected" : "")} key={index} onClick={(e) => this.handleListClicked(e)} ><a>{name}</a></li></Draggable>
+					<Draggable  key={index} data={name + "M"} type="component"><li className={"list-group-item text-center " + (name == this.props.selectedItem? "listViewSelected" : "")} key={index} onClick={(e) => this.handleListClicked(e)} ><a>{name}</a></li></Draggable>
 				)}
 			</ul>
 		)

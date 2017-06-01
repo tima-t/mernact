@@ -75,7 +75,7 @@ class RigthWrapper extends Component {
 							<WidgetProp widgetVal={this.props.componentStyle &&  this.props.componentStyle[property]}  elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} key={index} name={property} placeholder={property == "id" ? this.props.componentId : ""} />
 						)}
 						<WidgetProp key={this.props.componentId + 1} widgetVal={this.props.componentStyle && this.props.componentStyle["cellHeight"]} elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} name="cellHeight" placeholder={"50px"} />
-						<WidgetProp key={this.props.componentId + 2} widgetVal={this.props.componentStyle && this.props.componentStyle["cellWidth"]} elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} name="cellWidth" placeholder={"1"} />
+						<WidgetProp key={this.props.componentId + 2} widgetVal={this.props.componentStyle && this.props.componentStyle["cellWidth"]} elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} name="cellWidth" placeholder={"1 to 12"} />
 					</form>
 					<div className="row">
 						<div className="col-xs-4">
@@ -94,9 +94,9 @@ class RigthWrapper extends Component {
 					<WidgetProp name='id' />
 					<WidgetProp name='color' />
 					<WidgetProp name='font-size' />
-					<WidgetProp name='id' />
-					<WidgetProp name='color' />
-					<WidgetProp name='font-size' />
+					<WidgetProp name='height' />
+					<WidgetProp name='width' />
+					<WidgetProp name='class' />
 
 				</form>
 			</div>

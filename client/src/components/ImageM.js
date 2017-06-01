@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import "../css/LabelM.css"
+import "../css/ImageM.css"
 
-class LabelM extends Component {
+class ImageM extends Component {
 
 	constructor(props) {
 		super(props);
@@ -22,16 +22,16 @@ class LabelM extends Component {
 			//color: this.props.elStyle.color || '' , width: "100%"
 			return (
 				<div className="row">
-					<span id={this.props.elementId} onClick={(e) => this.handleClick(e)} style={this.style} className={"label label-default labelM " + this.style.class}>{this.style.value || this.props.elementText}</span>
+					<img alt="" id={this.props.elementId} src= {this.style.src || "./imgDefault.png"} onClick={(e) => this.handleClick(e)} width= "50px" height="50px"  style={this.style} className={"image image-default imageM " + this.style.class}/>
 				</div>
 			)
 		}
 		return (
 			<div className="row">
-				<span id={this.props.elementId} onClick={(e) => this.handleClick(e)} style={{ width: "100%" }} className="label label-default labelM ">{this.props.elementText || "val"}</span>
+				<img alt="" id={this.props.elementId} onClick={(e) => this.handleClick(e)} style={{ width: "50px", height:"50px" }} src={"./imgDefault.png"} className={"image image-default imageM "} />
 			</div>
 		)
 	}
 }
 
-export default LabelM;
+export default ImageM;

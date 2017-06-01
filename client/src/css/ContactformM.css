@@ -1,0 +1,31 @@
+.formT {
+	margin:5%;
+}
+
+.contact{
+	cursor:pointer;
+}
+.formT input {
+    margin: 5px;
+}
+
+.iSuccess,
+.iErrors {
+    margin-top: 10px !important;
+    display: none;
+    width: 80%;
+    margin: auto;
+}
+
+.servHeading {
+    font-weight: bold;
+    font-size: 17px;
+    text-align: center;
+	margin: 5% 5% 0 5%;
+}
+
+.hButton {
+    text-align: center;
+	margin: 5% 5% 0 5%;
+}
+
