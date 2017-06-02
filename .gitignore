@@ -1,4 +1,4 @@
-server/
+server/db_config.js
 server/node_modules/
 npm-debug.log
 client/node_modules
