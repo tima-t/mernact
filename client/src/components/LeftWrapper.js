@@ -99,7 +99,7 @@ class LeftWrapper extends Component {
 	}
 
 	render() {
-		const names = ['pages', 'widgets', 'resources'],
+		const names = ['pages', 'widgets'], //'resources'],
 			resources = ['images', 'videos', 'css', 'js'],
 			pagesButtons = [{ width: 4, type: "btn-default", text: "add", action: "add", "dataToggle": 'modal', "dataTarget": "#addPage" },
 			{ width: 4, type: "btn-primary", text: "remove", action: 'remove', "dataToggle": 'modal', "dataTarget": "#removePage" }],

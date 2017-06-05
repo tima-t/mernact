@@ -87,7 +87,7 @@ class Admin extends Component {
 				<LeftWrapper handlePageSelect={this.handlePageSelect} />
 				<PageWrapper pageContentUpdated={this.pageContentUpdated}  page_content={this.state.page_content || ""} selectedPage={this.state.selectedPage} elementRemovedFinished={this.elementRemovedFinished} operation={this.state.operation} elementId={this.state.elementId} propertyName={this.state.propertyName} propertyVal={this.state.propertyVal} componentClicked={this.componentClicked} />
 				<RigthWrapper elementRemoved={this.elementRemoved} propertyChanged={this.componentPropChanged} componentStyle={this.state.selectedComponentStyle} component={this.state.selectedComponent} componentId={this.state.selectedComponentId} />
-				<Link className="logOut" to="/" onClick={this.handleLogOut}>Log Out</Link>
+				<Link className="logOut btn btn-warning pull-right" to="/" onClick={this.handleLogOut}>Log Out</Link>
 			</div>
 		);
 	}
