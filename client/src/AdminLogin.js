@@ -41,23 +41,24 @@ class AdminLogin extends Component {
 			<div className="App">
 				<div className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
-					<h2>Welcome to React</h2>
+					<h2>Welcome to MernAct</h2>
 				</div>
+				<br></br>
 				<div className="container">
 					<form>
 						<div className="form-group">
-							<label htmlFor="email">Name:</label>
+							<label htmlFor="email">Admin Name:</label>
 							<input type="email" className="form-control" id="admin_name" placeholder="Enter name" />
 						</div>
 						<div className="form-group">
-							<label htmlFor="pwd">Password:</label>
+							<label htmlFor="pwd">Admin Password:</label>
 							<input type="password" className="form-control" id="admin_pass" placeholder="Enter password" />
 						</div>
 						<button className="btn btn-default" onClick={(e) => this.handleLoginClick(e)}>Submit</button>
 					</form>
 				</div>
 				<Link to="/">Home</Link>
-				{this.state.logged && <Redirect to="./admin"/>}
+				{this.state.logged && <Redirect to="/admin"/>}
 			</div>
 
 		);

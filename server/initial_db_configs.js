@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Page = require('./models/page');
+const PageStructure = require('./models/pageStructure');
 const Admin = require('./models/admin');
 const Property = require('./models/property');
 const Component = require('./models/component');
@@ -31,23 +32,54 @@ initAdmin.save((err) => {
 	console.log("Admin is set up succesfully");
 })
 
-//Initial properies
-for (let property of db_init_json['initialProperties']) {
-	let initialProperty = new Property({
-		name: property["name"],
-		value: property['value']
-	});
-	// initialProperty.ensureIndex({"name": property['name']}, {unique : true});
-	initialProperty.save((err) => {
-		if (err) {
-			console.log(err)
-			console.log("Error in property setup");
-			return;
-		}
-	})
-}
+// //Initial properies
+// for (let property of db_init_json['initialProperties']) {
+// 	let initialProperty = new Property({
+// 		name: property["name"],
+// 		value: property['value']
+// 	});
+// 	// initialProperty.ensureIndex({"name": property['name']}, {unique : true});
+// 	initialProperty.save((err) => {
+// 		if (err) {
+// 			console.log(err)
+// 			console.log("Error in property setup");
+// 			return;
+// 		}
+// 	})
+// }
 
-console.log("all properties are set succesfully");
+// console.log("all properties are set succesfully");
+
+//Inital home page
+let curPage = new Page({
+	name: "home",
+	created_by: 'admin',
+	created_at: new Date()
+})
+
+curPage.save((err) => {
+	if (err) {
+		console.log(err);
+		return;
+	}
+	console.log("Home page added!");
+})
+
+// Inital structure of home page
+let pageStructure = new PageStructure( {
+	page_name: "home",
+	components: db_init_json['homePageStructure'],
+	created_at: new Date()
+});
+
+pageStructure.save((err) => {
+	if (err) {
+		console.log(err);
+		return;
+	}
+	console.log("Home page structure added!");
+})
+
 
 //Initial components
 for (let comp of db_init_json['initialComponents']) {
