@@ -4,10 +4,10 @@ class WidgetProps extends Component {
 
 	render() {
 			//   this.props.widgetVal? <input type="text" className="form-control" placeholder={this.props.name} value={this.props.widgetVal} /> : 
-			let input = <input type="text" className="form-control" defaultValue={this.props.widgetVal} placeholder={this.props.placeholder || this.props.name} onChange={e=> this.handlePropertyChanged(e, this.props.elementId)} /*onChange={e => this.onWidgetChange(e.target.value)}*/ /> ;
+			let input = <input readOnly={this.props.name === "id"? true : false} type="text" className="form-control" defaultValue={this.props.widgetVal} placeholder={this.props.placeholder || this.props.name} onChange={e=> this.handlePropertyChanged(e, this.props.elementId)} /*onChange={e => this.onWidgetChange(e.target.value)}*/ /> ;
 		return (
 			<div className="form-group WidgetProp">
-				<label htmlFor="usr">{this.props.name}</label>
+				<label htmlFor="prop">{this.props.name}</label>
 				{input}
 			</div>
 		);
@@ -26,9 +26,6 @@ class WidgetProps extends Component {
 		else{
 			console.log("no function is triggered on change");
 		}
-
-
-
 	}
 }
 

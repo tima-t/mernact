@@ -252,7 +252,7 @@ adminRouter.get('/initial_widgets', function (req, res) {
 			{
 				"resp": { "widgets": widgets }
 			});
-	});
+	}).sort( { name: 1 } );
 });
 
 app.use("/api/admin", adminRouter);
