@@ -92,7 +92,10 @@ class PageWrapper extends Component {
 		// if page is selected
 		if (this.props.selectedPage) {
 			// console.log(localStorage);
-			$.post("http://localhost:9000/api/admin/save_page_structure", { "pageName": this.props.selectedPage, "pageStructure": this.page_content, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
+			let minimized_page_content = this.page_content.filter(cell => {
+				return cell["cell_content"];
+			})
+			$.post("http://localhost:9000/api/admin/save_page_structure", { "pageName": this.props.selectedPage, "pageStructure": minimized_page_content, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
 				alert("Your page is " + data.resp);
 			}, "json")
 				.fail(function (response) {
@@ -108,8 +111,16 @@ class PageWrapper extends Component {
 		// console.log("el styl e", this.elementStyle[this.props.elementId]);
 		// console.log(this.props.page_content)
 		if (this.props.page_content) {
-			this.page_content = this.props.page_content.length ? this.props.page_content : this.inital_page_content;
-			this.elementStyle = this.props.page_content.map((component) => component["cell_content_style"] || {});
+			let page_content_normalized = this.inital_page_content.map(a => Object.assign({}, a));;
+			console.log("page conetent minimized ", this.props.page_content);
+			console.log("page conetent inital ", this.inital_page_content);
+			this.props.page_content.forEach(function (cell) {
+				console.log(cell)
+				page_content_normalized[cell["index"]] = cell;
+			}, this);
+			console.log("normalized", page_content_normalized);
+			this.page_content = page_content_normalized.length ? page_content_normalized : this.inital_page_content;
+			this.elementStyle = page_content_normalized.map((component) => component["cell_content_style"] || {});
 			this.props.pageContentUpdated();
 		}
 		if (this.props.elementId) {

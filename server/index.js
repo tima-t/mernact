@@ -100,7 +100,6 @@ app.post('/api/admin_validate', function (req, res) {
 })
 
 app.get('/api/get_page_structure', function (req, res) {
-	console.log(req.body.pageName);
 	PageStructure.find({ page_name: req.query.pageName }, (err, pageStrucutre) => {
 		if (err) {
 			res.json({ "resp": err });
@@ -112,6 +111,8 @@ app.get('/api/get_page_structure', function (req, res) {
 		else {
 			res.json({ "resp": { "pageStructure": [] } })
 		}
+
+
 
 	})
 })
@@ -252,7 +253,7 @@ adminRouter.get('/initial_widgets', function (req, res) {
 			{
 				"resp": { "widgets": widgets }
 			});
-	}).sort( { name: 1 } );
+	}).sort({ name: 1 });
 });
 
 app.use("/api/admin", adminRouter);
