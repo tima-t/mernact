@@ -20,43 +20,6 @@ class PageBuilder extends Component {
 		this.handlePageSelect(this.props.match.params.pageName || "home");
 	}
 
-	// handleLogOut() {
-	// 	console.log("clear local storage");
-	// 	console.log(localStorage);
-	// 	localStorage.clear();
-	// }
-
-	// componentClicked(comp) {
-	// 	this.setState({
-	// 		'selectedComponent': comp.type,
-	// 		'selectedComponentId': comp.id,
-	// 		'selectedComponentStyle': comp.style
-	// 	})
-	// }
-
-	// componentPropChanged(element) {
-	// 	this.setState({
-	// 		"elementId": element.elementId,
-	// 		"propertyName": element.propertyName,
-	// 		"propertyVal": element.propertyVal
-	// 	})
-	// }
-
-	// elementRemoved(element) {
-	// 	console.log("here remove ", element);
-	// 	this.setState({
-	// 		"elementId": element.elementId,
-	// 		"operation": "remove"
-	// 	})
-	// }
-
-	// elementRemovedFinished() {
-	// 	this.setState({
-	// 		"elementId": "",
-	// 		"operation": "stay"
-	// 	})
-	// }
-
 	pageContentUpdated(){
 		this.setState({
 			"page_content": ""

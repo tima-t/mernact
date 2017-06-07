@@ -22,7 +22,7 @@ class ImageM extends Component {
 			//color: this.props.elStyle.color || '' , width: "100%"
 			return (
 				<div className="row">
-					<img alt="" id={this.props.elementId} src= {this.style.src || "./imgDefault.png"} onClick={(e) => this.handleClick(e)} width= "50px" height="50px"  style={this.style} className={"image image-default imageM " + this.style.class}/>
+					<img alt="" id={this.props.elementId} src={this.style.src || "./imgDefault.png"} onClick={(e) => this.handleClick(e)} width="50px" height="50px"  style={this.style} className={"image image-default imageM " + this.style.class}/>
 				</div>
 			)
 		}

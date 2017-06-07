@@ -203,19 +203,6 @@ const db_init_json = {
 				"value": "Videos and Many More"
 			}
 		},
-		{
-			"index": "129",
-			"row": "11",
-			"cell": "10",
-			"cellWidth": "6",
-			"cellHeight": "200px",
-			"cell_content": "videoM",
-			"cell_content_style": {
-				"cellWidth": "6",
-				"height": "160px",
-				"cellHeight": "200px"
-			}
-		},
 	],
 }
 module.exports = db_init_json;
