@@ -31,7 +31,7 @@ exec('cd server && npm install', (error, stdout, stderr) => {
 
 });
 
-exec('cd client && npm install', (error) => {
+exec('cd client && npm install && npm run build', (error) => {
 	if (error) {
 		console.error(`exec error: ${error}`);
 		return;
