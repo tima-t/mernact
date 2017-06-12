@@ -27,7 +27,6 @@ class AdminLogin extends Component {
 				localStorage.setItem("admin_name", name);
 				localStorage.setItem("admin_token", data.token);
 				localStorage.setItem("isUserAdmin" + data.token, "true");
-				console.log("success");
 				that.setState({"logged": true});
 			}, "json")
 			.fail(function (response) {

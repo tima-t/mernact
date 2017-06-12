@@ -24,34 +24,27 @@ class LeftWrapper extends Component {
 		this.getInitialPages();
 		this.getInitialWidgets();
 		this.updateState = 0;
-		console.log("construct");
 	}
 
 	getInitialPages() {
 		let that = this;
 		$.get("http://localhost:9000/api/admin/initial_pages", { "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
-			console.log(data);
-			//return data.response.
 			let pagesNames = [];
 			for (let page of data.resp.pages) {
 				pagesNames.push(page.name);
 			}
 			that.pages = pagesNames;
 			that.setState({ "pagesUpdateState": ++that.updateState });
-			console.log(that.updateState);
 		}, "json");
 	}
 
 	getInitialWidgets() {
 		let that = this;
 		$.get("http://localhost:9000/api/admin/initial_widgets", { "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
-			console.log(data);
-			//return data.response.
 			for (let widget of data.resp.widgets) {
 				that.widgets.push({ "name": widget.name, "properties": widget.properties });
 			}
 			that.setState({ "pagesUpdateState": ++that.updateState });
-			console.log(that.updateState);
 		}, "json");
 	}
 
@@ -64,7 +57,6 @@ class LeftWrapper extends Component {
 	}
 
 	buttonClick(e, action) {
-		console.log(action);
 		e.preventDefault();
 	}
 
@@ -80,7 +72,6 @@ class LeftWrapper extends Component {
 	}
 
 	removePage(e, pageName) {
-		console.log("remove " + pageName);
 		let that = this;
 		e.preventDefault();
 		$.post("http://localhost:9000/api/admin/remove_page", { "pageName": pageName, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {

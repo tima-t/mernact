@@ -4,8 +4,7 @@ import {
 	BrowserRouter as Router,
 	Route
 } from 'react-router-dom';
-import App from './App';
-import Admin from './Admin';
+import AdminPanel from './AdminPanel';
 import AdminLogin from './AdminLogin';
 import PageBuilder from './components/PageBuilder';
 import './index.css';
@@ -17,7 +16,7 @@ ReactDOM.render(
 			<Route exact path='/' component={PageBuilder} />
 			<Route path='/page/:pageName' component={PageBuilder} />
 			<Route path='/admin_login' component={AdminLogin} />
-			<PrivateRoute path='/admin' component={Admin} />
+			<PrivateRoute path='/admin' component={AdminPanel} />
 		</switch>
 	</Router>,
 	document.getElementById('root')

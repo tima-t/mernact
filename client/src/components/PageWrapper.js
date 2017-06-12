@@ -43,22 +43,15 @@ class PageWrapper extends Component {
 
 
 	dropNotification(item, that, data) {
-		// console.log(data);
-		// console.log(item);
-		// console.log(that);
-		// console.log(that.state.page_content);
 		that.setState({ "curState": (that.state.curState + 1) });
 		that.page_content[item.index]["cell_content"] = data.component;
 		that.props.componentClicked({ "id": (data.component + item.index), "type": data.component });
-		// that.forceUpdate();
-		// console.log(that.props)
 	}
 
 	handleComponentClick(e) {
 		let curElementIndex = e.target.id.replace(/^\D+/g, '');
 		$(".grid_cell_selected").removeClass("grid_cell_selected");
 		$("#cell_" + curElementIndex).addClass("grid_cell_selected");
-		console.log($("#cell_" + curElementIndex));
 		let curStyle = this.page_content[curElementIndex]["cell_content_style"];
 		this.props.componentClicked({ "id": (e.target.id), "type": (e.target.id.replace(/[0-9]/g, '')), "style": curStyle });
 	}
@@ -88,10 +81,8 @@ class PageWrapper extends Component {
 
 	savePage(e) {
 		e.preventDefault();
-		// console.log(this.page_content)
 		// if page is selected
 		if (this.props.selectedPage) {
-			// console.log(localStorage);
 			let minimized_page_content = this.page_content.filter(cell => {
 				return cell["cell_content"];
 			})
@@ -105,20 +96,12 @@ class PageWrapper extends Component {
 	}
 
 	render() {
-		// console.log("state refresh")
-		// console.log(this.state);
-		// console.log("page props", this.props);
-		// console.log("el styl e", this.elementStyle[this.props.elementId]);
-		// console.log(this.props.page_content)
+
 		if (this.props.page_content) {
-			let page_content_normalized = this.inital_page_content.map(a => Object.assign({}, a));;
-			console.log("page conetent minimized ", this.props.page_content);
-			console.log("page conetent inital ", this.inital_page_content);
+			let page_content_normalized = this.inital_page_content.map(a => Object.assign({}, a));
 			this.props.page_content.forEach(function (cell) {
-				console.log(cell)
 				page_content_normalized[cell["index"]] = cell;
 			}, this);
-			console.log("normalized", page_content_normalized);
 			this.page_content = page_content_normalized.length ? page_content_normalized : this.inital_page_content;
 			this.elementStyle = page_content_normalized.map((component) => component["cell_content_style"] || {});
 			this.props.pageContentUpdated();
@@ -134,14 +117,12 @@ class PageWrapper extends Component {
 				this.props.elementRemovedFinished();
 			}
 			else {
-				console.log("page content ", this.page_content);
 				this.elementStyle[curElementIndex] = this.elementStyle[curElementIndex] || {};
 				this.elementStyle[curElementIndex][this.props.propertyName] = this.props.propertyVal;
 				this.page_content[curElementIndex]["cell_content_style"] = this.page_content[curElementIndex]["cell_content_style"] || {};
 				this.page_content[curElementIndex]["cell_content_style"][this.props.propertyName] = this.props.propertyVal;
 				this.page_content[curElementIndex]["cellWidth"] = this.page_content[curElementIndex]["cell_content_style"]["cellWidth"] || "1";
 				this.page_content[curElementIndex]["cellHeight"] = this.page_content[curElementIndex]["cell_content_style"]["cellHeight"] || "50px";
-				console.log("page ele style", this.page_content);
 			}
 
 

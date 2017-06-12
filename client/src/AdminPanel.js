@@ -8,7 +8,7 @@ import {
 	Link
 } from 'react-router-dom';
 
-class Admin extends Component {
+class AdminPanel extends Component {
 
 
 	constructor(props) {
@@ -23,8 +23,6 @@ class Admin extends Component {
 	}
 
 	handleLogOut() {
-		console.log("clear local storage");
-		console.log(localStorage);
 		localStorage.clear();
 	}
 
@@ -45,7 +43,6 @@ class Admin extends Component {
 	}
 
 	elementRemoved(element) {
-		console.log("here remove ", element);
 		this.setState({
 			"elementId": element.elementId,
 			"operation": "remove"
@@ -68,7 +65,6 @@ class Admin extends Component {
 	handlePageSelect(pageName) {
 		let that = this;
 		$.get("http://localhost:9000/api/admin/get_page_structure", { "pageName": pageName, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
-			console.log("page structure ", data.resp.pageStructure);
 			that.setState({
 				"selectedPage": pageName,
 				"page_content": (data.resp.pageStructure || ""),
@@ -81,7 +77,6 @@ class Admin extends Component {
 	}
 
 	render() {
-		console.log("admin state refresh");
 		return (
 			<div ref="adminPanel" className="AdminPanel">
 				<LeftWrapper handlePageSelect={this.handlePageSelect} />
@@ -93,4 +88,4 @@ class Admin extends Component {
 	}
 }
 
-export default Admin;
+export default AdminPanel;

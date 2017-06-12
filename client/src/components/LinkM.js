@@ -20,10 +20,8 @@ class LinkM extends Component {
 
 	}
 	render() {
-		// console.log("this element ", this.props.elStyle);
 		this.style = this.props.elStyle || this.style;
 		if (this.style) {
-			//color: this.props.elStyle.color || '' , width: "100%"
 			return (
 				<div className="row">
 					<Link to={this.props.clientMode && this.style.destination && this.style.destination.indexOf(".") === -1  ? "/page/" + this.style.destination : "#"} id={this.props.elementId} onClick={(e) => this.handleClick(e)} style={this.style} className={"btn btn-info " + this.style.class}>{this.style.value || this.props.elementText}</Link>

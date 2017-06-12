@@ -16,24 +16,16 @@ class RigthWrapper extends Component {
 
 	componentDidMountRec() {
 		let that = this;
-		console.log(" /////////////// did mount recursive");
-		console.log(that.componentSelected);
-		console.log(that.props.component);
-		console.log(that.props.componentId);
-		console.log("selected btn ", that.componentSelected[0])
-		console.log("new com props ", that.props.componentId);
 
-		console.log("///////////////////");
 		if (!that.props.component) {
 			return;
 		}
 		else {
 			if (that.componentSelected[0] !== that.props.componentId) {
-				console.log("new el");
-				console.log(that.componentSelected);
+
 				that.componentSelected = [];
 				that.componentProps.length = 0;
-				console.log("after clean", that.componentSelected);
+
 			}
 			if (that.componentSelected.length === 0) {
 				$.get("http://localhost:9000/api/admin/component_props", {
@@ -49,9 +41,6 @@ class RigthWrapper extends Component {
 				}, "json");
 			}
 		}
-
-
-
 	}
 
 	handlePropertyChanged(data) {
@@ -65,14 +54,13 @@ class RigthWrapper extends Component {
 
 	render() {
 		this.componentDidMountRec();
-		console.log("style ",this.props.componentStyle);
 		if (this.componentProps.length) {
 			let ComponentPropsView =
 				<div style={{ backgroundColor: '#D5D8D5' }} className="RigthWrapper col-sm-3">
 					<WrapperTitle name={"Edit " + this.props.componentId + " properties"} />
 					<form>
 						{this.componentProps.map((property, index) =>
-							<WidgetProp widgetVal={this.props.componentStyle &&  this.props.componentStyle[property]}  elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} key={index} name={property} placeholder={property === "id" ? this.props.componentId : ""} />
+							<WidgetProp widgetVal={this.props.componentStyle && this.props.componentStyle[property]} elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} key={index} name={property} placeholder={property === "id" ? this.props.componentId : ""} />
 						)}
 						<WidgetProp key={this.props.componentId + 1} widgetVal={this.props.componentStyle && this.props.componentStyle["cellHeight"]} elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} name="cellHeight" placeholder={"50px"} />
 						<WidgetProp key={this.props.componentId + 2} widgetVal={this.props.componentStyle && this.props.componentStyle["cellWidth"]} elementId={this.props.componentId} propertyChanged={(data) => this.handlePropertyChanged(data)} name="cellWidth" placeholder={"1 to 12"} />

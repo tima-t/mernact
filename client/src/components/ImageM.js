@@ -9,17 +9,14 @@ class ImageM extends Component {
 	}
 
 	handleClick(e) {
-		console.log(e.target.id);
 		if (this.props.elementClick) {
 			this.props.elementClick(e);
 		}
 
 	}
 	render() {
-		// console.log("this element ", this.props.elStyle);
 		this.style = this.props.elStyle || this.style;
 		if (this.style) {
-			//color: this.props.elStyle.color || '' , width: "100%"
 			return (
 				<div className="row">
 					<img alt="" id={this.props.elementId} src={this.style.src || "./imgDefault.png"} onClick={(e) => this.handleClick(e)} width="50px" height="50px"  style={this.style} className={"image image-default imageM " + this.style.class}/>

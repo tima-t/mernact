@@ -13,10 +13,10 @@ const crypto = require('crypto');
 const multer = require("multer");
 const nodeMailer = require("nodemailer");
 const transporter = nodeMailer.createTransport({
-	service: 'gmail',
+	service: 'Gmail',
 	auth: {
 		user: db_config['initial_email'],
-		pass: db_config['email_pass']
+		pass: db_config['email_pass'],
 	}
 })
 
@@ -63,6 +63,7 @@ app.post('/api/send_mail', function (req, res) {
 		html: '<b>' + req.body.message + "<br> From " + req.body.name + " - " + req.body.email + '</b>' // html body
 	};
 
+
 	transporter.sendMail(mailOptions, (error, info) => {
 		if (error) {
 			res.json({ "resp": error });
@@ -74,15 +75,12 @@ app.post('/api/send_mail', function (req, res) {
 
 
 app.post('/api/admin_validate', function (req, res) {
-	console.log("login admin");
-	console.log(crypto.createHash("sha256").update(req.body.pass + db_config['pepper']).digest("hex"));
 	Admin.find({ "name": req.body.name, "pass": crypto.createHash("sha256").update(req.body.pass + db_config['pepper']).digest("hex") }, (err) => {
 		if (err) {
 			res.json({ "resp": err });
 			return;
 		}
 	}).count(function (err, count) {
-		console.log(count);
 		if (count === 1) {
 			crypto.randomBytes(256, (err, buf) => {
 				if (err) return err;
@@ -129,12 +127,6 @@ adminRouter.post('/photo', function (req, res) {
 });
 
 adminRouter.use(function (req, res, next) {
-	console.log(req.query);
-	console.log("here auth user");
-	console.log("name client", req.body.name);
-	console.log("token client", req.body.token);
-	console.log(userName);
-	console.log(token);
 	if ((req.body.name || req.query.name) == userName && (req.body.token || req.query.token) == token) {
 		next();
 	}
@@ -146,7 +138,6 @@ adminRouter.use(function (req, res, next) {
 })
 
 adminRouter.post('/add_page', function (req, res) {
-	console.log(req.body.pageName);
 	let curPage = new Page({
 		name: req.body.pageName,
 		created_by: 'admin',
@@ -179,7 +170,6 @@ adminRouter.post('/save_page_structure', function (req, res) {
 })
 
 adminRouter.get('/get_page_structure', function (req, res) {
-	console.log(req.body.pageName);
 	PageStructure.find({ page_name: req.query.pageName }, (err, pageStrucutre) => {
 		if (err) {
 			res.json({ "resp": err });
@@ -196,8 +186,6 @@ adminRouter.get('/get_page_structure', function (req, res) {
 })
 
 adminRouter.post('/remove_page', function (req, res) {
-	console.log("remove page");
-	console.log(req.body.pageName);
 	Page.remove({ "name": req.body.pageName }, (err) => {
 		if (err) {
 			res.json({ "resp": err });
@@ -229,7 +217,6 @@ adminRouter.get('/initial_pages', function (req, res) {
 });
 
 adminRouter.get('/component_props', function (req, res) {
-	console.log("component props ", req.query.component)
 	Component.find({ name: req.query.component }, function (err, comp) {
 		if (err) {
 			res.json({ "resp": err })

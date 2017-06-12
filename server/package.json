@@ -1,5 +1,5 @@
 {
-  "name": "mernactserver",
+  "name": "mernact-cms-server",
   "version": "1.0.0",
   "description": "Server for mernact cms",
   "main": "index.js",
