@@ -18,6 +18,7 @@ ReactDOM.render(
 	<Router>
 		<switch>
 			<Route exact path='/' component={PageBuilder} />
+			<Route exact path='/page/admin_login' component={AdminLogin} />
 			<Route path='/page/:pageName' component={PageBuilder} />
 			<Route path='/admin_login' component={AdminLogin} />
 			<PrivateRoute path='/admin' component={AdminPanel} />
