@@ -25,7 +25,6 @@ class AdminPanel extends Component {
 	handleLogOut() {
 		localStorage.removeItem("admin_name");
 		localStorage.removeItem("admin_token");
-		localStorage.removeItem("isUserAdmin" + data.token);
 	}
 
 	componentClicked(comp) {
