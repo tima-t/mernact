@@ -28,7 +28,7 @@ class RigthWrapper extends Component {
 
 			}
 			if (that.componentSelected.length === 0) {
-				$.get("http://localhost:9000/api/admin/component_props", {
+				$.get(localStorage.getItem("server") + "/api/admin/component_props", {
 					"name": localStorage.getItem("admin_name"),
 					"token": localStorage.getItem("admin_token"),
 					"component": that.props.component.slice(0, -1)

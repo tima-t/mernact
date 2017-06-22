@@ -7,7 +7,7 @@ import {
 import $ from 'jquery';
 
 class AdminLogin extends Component {
-	
+
 	constructor(props){
 		super(props);
 		this.state = { 'logged': false };
@@ -18,7 +18,7 @@ class AdminLogin extends Component {
 		let pass = $("#admin_pass").val();
 		let that = this;
 		e.preventDefault();
-		$.post("http://localhost:9000/api/admin_validate", { "name": name, "pass": pass },
+		$.post(localStorage.getItem("server") + "/api/admin_validate", { "name": name, "pass": pass },
 			function (data) {
 				if(!data.token){
 					alert("Error " + data.resp);

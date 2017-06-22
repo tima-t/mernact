@@ -86,7 +86,7 @@ class PageWrapper extends Component {
 			let minimized_page_content = this.page_content.filter(cell => {
 				return cell["cell_content"];
 			})
-			$.post("http://localhost:9000/api/admin/save_page_structure", { "pageName": this.props.selectedPage, "pageStructure": minimized_page_content, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
+			$.post(localStorage.getItem("server") + "/api/admin/save_page_structure", { "pageName": this.props.selectedPage, "pageStructure": minimized_page_content, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
 				alert("Your page is " + data.resp);
 			}, "json")
 				.fail(function (response) {

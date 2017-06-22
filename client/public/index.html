@@ -84,7 +84,7 @@
 				$("#iSubject").val("");
 				$(".iSuccess").show();
 				$(".iErrors").hide();
-				$.post("http://localhost:9000/api/send_mail", { name: name, email: email, subject: subject, message: message }).error(function(){
+				$.post(localStorage.getItem("server") + "/api/send_mail", { name: name, email: email, subject: subject, message: message }).error(function(){
 					alert("Your email is not sent");
 					$(".iErrors").show();
 				});

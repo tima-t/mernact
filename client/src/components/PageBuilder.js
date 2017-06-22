@@ -24,7 +24,7 @@ class PageBuilder extends Component {
 
 	handlePageSelect(pageName) {
 		let that = this;
-		$.get("http://localhost:9000/api/get_page_structure", { "pageName": pageName, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
+		$.get( localStorage.getItem("server") + "/api/get_page_structure", { "pageName": pageName }, function (data) {
 			that.setState({
 				"selectedPage": pageName ,
 				"page_content": (data.resp.pageStructure || ""),
@@ -41,7 +41,7 @@ class PageBuilder extends Component {
 			this.handlePageSelect(this.props.match.params.pageName);
 		 }
 		return (
-			<div className={"PageBuilder " + this.state.selectedPage }>				
+			<div className={"PageBuilder " + this.state.selectedPage }>
 				<PageWrapper clientMode={true} pageContentUpdated={this.pageContentUpdated}  page_content={this.state.page_content || ""} selectedPage={this.props.match.params.pageName } elementRemovedFinished={this.elementRemovedFinished} operation={this.state.operation} elementId={this.state.elementId} propertyName={this.state.propertyName} propertyVal={this.state.propertyVal} componentClicked={this.componentClicked} />
 			</div>
 		);

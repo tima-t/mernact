@@ -28,7 +28,7 @@ class LeftWrapper extends Component {
 
 	getInitialPages() {
 		let that = this;
-		$.get("http://localhost:9000/api/admin/initial_pages", { "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
+		$.get(localStorage.getItem("server") + "/api/admin/initial_pages", { "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
 			let pagesNames = [];
 			for (let page of data.resp.pages) {
 				pagesNames.push(page.name);
@@ -40,7 +40,7 @@ class LeftWrapper extends Component {
 
 	getInitialWidgets() {
 		let that = this;
-		$.get("http://localhost:9000/api/admin/initial_widgets", { "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
+		$.get(localStorage.getItem("server") + "/api/admin/initial_widgets", { "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
 			for (let widget of data.resp.widgets) {
 				that.widgets.push({ "name": widget.name, "properties": widget.properties });
 			}
@@ -63,7 +63,7 @@ class LeftWrapper extends Component {
 	addPage(e, pageName) {
 		let that = this;
 		e.preventDefault();
-		$.post("http://localhost:9000/api/admin/add_page", { "pageName": pageName, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
+		$.post(localStorage.getItem("server") + "/api/admin/add_page", { "pageName": pageName, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
 			that.getInitialPages();
 		}, "json")
 			.fail(function (response) {
@@ -74,7 +74,7 @@ class LeftWrapper extends Component {
 	removePage(e, pageName) {
 		let that = this;
 		e.preventDefault();
-		$.post("http://localhost:9000/api/admin/remove_page", { "pageName": pageName, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
+		$.post(localStorage.getItem("server") + "/api/admin/remove_page", { "pageName": pageName, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
 			that.getInitialPages();
 		}, "json")
 			.fail(function (response) {
@@ -104,7 +104,7 @@ class LeftWrapper extends Component {
 				<ButtonsRow buttonClick={this.buttonClick} buttons={nav[this.state.page + 'Buttons'] || []} />
 				<form className={this.state.page !== "resources"? "hidden" : ""} id="uploadForm"
 					encType="multipart/form-data"
-					action="http://localhost:9000/api/admin/photo"
+					action= {localStorage.getItem("server") + "/api/admin/photo"}
 					method="post">
 					<input type="file" name="userPhoto" />
 					<input type="submit" value="Upload Image" name="submit"/>

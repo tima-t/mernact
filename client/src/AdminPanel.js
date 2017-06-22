@@ -64,7 +64,7 @@ class AdminPanel extends Component {
 
 	handlePageSelect(pageName) {
 		let that = this;
-		$.get("http://localhost:9000/api/admin/get_page_structure", { "pageName": pageName, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
+		$.get( localStorage.getItem("server") + "/api/admin/get_page_structure", { "pageName": pageName, "name": localStorage.getItem("admin_name"), "token": localStorage.getItem("admin_token") }, function (data) {
 			that.setState({
 				"selectedPage": pageName,
 				"page_content": (data.resp.pageStructure || ""),
