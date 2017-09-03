@@ -15,4 +15,6 @@ The demo of the MernAct site is base here: http://doubleti.net:5000/
  user: mern<br>
  pass: mern<br>
 
-Note: The project is still in development
+Note: The project is still in development,<br>
+if you want to contribute to the project or have some other ideas,<br>
+Write me on tito.marchev@gmail.com
