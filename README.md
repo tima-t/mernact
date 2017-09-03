@@ -1,6 +1,6 @@
 # mernact
-This is a innovatuive CMS for building a portfolio sites and prototypes. <br>
-The project is based on MongoDB, Expressjs, Reactjs,Nodejs and bootstrap. <br>
+This is a innovative CMS for building a portfolio sites and prototypes. <br>
+The project is based on MongoDB, Expressjs, Reactjs, Nodejs and Bootstrap. <br>
 
 1 Clone the repo <br>
 2 Make mongo database in mLab or in your local server.  <br>
